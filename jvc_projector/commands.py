@@ -2,7 +2,7 @@
 All the enums for commands
 """
 from enum import Enum
-
+from jvc_projector.numeric_data import NumericData
 
 # pylint: disable=missing-class-docstring invalid-name
 class Header(Enum):
@@ -32,6 +32,9 @@ class ACKs(Enum):
     hdr_ack = b"IF"
     model = b"MD"
 
+class ApertureSetting(NumericData):
+    _min = -15
+    _max = 0
 
 class InputModes(Enum):
     """
@@ -329,3 +332,5 @@ class Commands(Enum):
 
     # e-shift
     eshift_mode = b"PMUS", EshiftModes, ACKs.picture_ack
+
+    manual_aperture = b"PMLA", ApertureSetting, ACKs.picture_ack

@@ -27,7 +27,8 @@ from jvc_projector.commands import (
     HdrData,
     LampPowerModes,
     LaserPowerModes,
-    AspectRatioModes
+    AspectRatioModes,
+    ApertureSetting
 )
 
 
@@ -577,6 +578,13 @@ class JVCProjector:
         """
         state, _ = self._do_reference_op("aspect_ratio", ACKs.hdmi_ack)
         return AspectRatioModes(state.replace(ACKs.hdmi_ack.value, b"")).name
+
+    def get_manual_aperture(self) -> str:
+        """
+        Return current manual lens aperture setting (0 to -15)
+        """
+        state, _ = self._do_reference_op("manual_aperture", ACKs.picture_ack)
+        return ApertureSetting(state.replace(ACKs.picture_ack.value, b"")).name
 
     def _get_power_state(self) -> str:
         """
